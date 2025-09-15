@@ -1,0 +1,453 @@
+<!-- ====== Footer START ====== -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+<footer class="site-footer">
+  <div class="footer-wrap">
+    <!-- Top: Logo + Newsletter + Social -->
+    <div class="footer-top">
+      <a href="/" class="brand">
+        <img src="/img/Logo.png"" alt="Abaris"
+        onerror="this.style.display='none'" />
+      </a>
+
+      <form id="newsletterForm" class="newsletter" novalidate>
+        <label class="newsletter-label">NEWSLETTER<br />SUBSCRIPTION</label>
+        <div class="newsletter-field">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email Address"
+            aria-label="Your Email Address"
+            required
+          />
+          <button type="submit" class="btn-sub">
+            <span>SUBMIT</span> <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+        <p class="newsletter-note" aria-live="polite"></p>
+      </form>
+
+      <div class="social">
+        <a aria-label="Facebook" href="#"><i class="fab fa-facebook-f"></i></a>
+        <a aria-label="Twitter" href="#"><i class="fab fa-x-twitter"></i></a>
+        <a aria-label="Instagram" href="#"><i class="fab fa-instagram"></i></a>
+        <a aria-label="LinkedIn" href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a aria-label="YouTube" href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <hr class="footer-divider" />
+
+    <!-- Main columns -->
+    <div class="footer-main">
+      <!-- Our Network -->
+      <div class="f-col">
+        <h4 class="f-title">Our Network</h4>
+        <ul class="contact-list">
+          <li><strong>Ahmedabad:</strong> +91 079 26440704</li>
+          <li><strong>Himachal Pradesh:</strong> +91 1883 322511</li>
+        </ul>
+      </div>
+
+      <!-- We Are Everywhere (Map) -->
+      <div class="f-col f-map">
+        <h4 class="f-title">We are Everywhere</h4>
+        <div class="map-card">
+          <!-- Put your map SVG here if you like: assets/world-map.svg -->
+          <img
+            class="map-img"
+            src="assets/world-map.svg"
+            alt="World map"
+            onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg'"
+          />
+          <!-- Pins (yellow dots) -->
+          <span class="pin" style="left: 22%; top: 38%"></span>
+          <span class="pin" style="left: 30%; top: 45%"></span>
+          <span class="pin" style="left: 47%; top: 35%"></span>
+          <span class="pin" style="left: 53%; top: 43%"></span>
+          <span class="pin" style="left: 66%; top: 40%"></span>
+          <span class="pin" style="left: 73%; top: 66%"></span>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="f-col">
+        <h4 class="f-title">Info</h4>
+        <ul class="link-list">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/about-hero.html">About Us</a></li>
+          <li>
+            <a href="/manufacturing-quality.html">Manufacturing Capabilities</a>
+          </li>
+          <li><a href="/clients.html">Our Clients</a></li>
+          <li><a href="/careers.html">Career</a></li>
+          <li><a href="/Contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Information -->
+      <div class="f-col">
+        <h4 class="f-title">Contact Information</h4>
+
+        <div class="info-block">
+          <div class="info-line">
+            <i class="fa-solid fa-location-dot"></i>
+            <div>
+              <div class="info-label">Office Address</div>
+              <p>
+                E-5, Udyog Nagar,<br />
+                Rohtak Road, Delhi – 110041,<br />
+                Opposite Metro Pillar No.: 300
+              </p>
+            </div>
+          </div>
+
+          <div class="info-line">
+            <i class="fa-solid fa-paper-plane"></i>
+            <div>
+              <div class="info-label">Email Address</div>
+              <a href="mailto:info@abarishealthcare.com"
+                >info@abarishealthcare.com</a
+              >
+            </div>
+          </div>
+
+          <div class="info-line">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <div class="info-label">Contact No.</div>
+              <a href="tel:+9107926440704">+91 079 26440704</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /footer-main -->
+  </div>
+  <!-- /footer-wrap -->
+
+  <div class="footer-bottom">
+    <div class="footer-wrap">
+      <p>
+        Copyright © <span id="year"></span>. Abaris Healthcare. All Rights
+        Reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+<!-- ====== Footer END ====== -->
+
+<style>
+  :root {
+    --footer-bg: #072a57;
+    --footer-bg-2: #052447;
+    --line: #0f417d;
+    --text: #d8e7ff;
+    --muted: #a7c0ea;
+    --accent: #ffd54a;
+    --input-bg: #0b3b7a;
+    --btn: #0ea5e9;
+  }
+
+  .site-footer {
+    color: var(--text);
+    background: radial-gradient(
+        1200px 100% at 90% -10%,
+        rgba(255, 255, 255, 0.06),
+        transparent 60%
+      ),
+      linear-gradient(180deg, var(--footer-bg) 0%, var(--footer-bg-2) 100%);
+    position: relative;
+  }
+  .footer-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px 18px;
+  }
+  .footer-top {
+    display: grid;
+    gap: 16px;
+    align-items: center;
+    grid-template-columns: 180px 1fr auto;
+    padding: 8px 0 14px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text);
+  }
+  .brand img {
+    height: 46px;
+    width: auto;
+  }
+  .brand-fallback {
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: 0.2px;
+  }
+
+  .newsletter {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 14px;
+    align-items: center;
+  }
+  .newsletter-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .newsletter-field {
+    display: flex;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .newsletter-field input {
+    flex: 1;
+    padding: 12px 16px;
+    min-width: 0;
+    color: #fff;
+    border: 0;
+    outline: none;
+    background: transparent;
+  }
+  .btn-sub {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 0;
+    cursor: pointer;
+    padding: 10px 14px 10px 16px;
+    color: #052447;
+    background: #e6f6ff;
+    font-weight: 800;
+    border-left: 1px solid var(--line);
+  }
+  .btn-sub:hover {
+    filter: brightness(1.05);
+  }
+  .newsletter-note {
+    margin: 4px 0 0 160px;
+    font-size: 12px;
+    color: #bfe6ff;
+    min-height: 16px;
+  }
+
+  .social a {
+    color: #bfe6ff;
+    margin-left: 12px;
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+  }
+  .social a:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-divider {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 10px 0 18px;
+  }
+
+  .footer-main {
+    display: grid;
+    gap: 26px;
+    align-items: start;
+    grid-template-columns: 1.1fr 1.4fr 0.9fr 1.1fr;
+  }
+  .f-title {
+    margin: 0 0 12px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #e6f2ff;
+  }
+  .link-list,
+  .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .link-list li {
+    margin: 8px 0;
+  }
+  .link-list a {
+    color: var(--text);
+    text-decoration: none;
+  }
+  .link-list a:hover {
+    color: #fff;
+  }
+  .contact-list li {
+    color: var(--muted);
+    margin: 8px 0;
+  }
+
+  /* Map card */
+  .map-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px;
+    height: 160px;
+    overflow: hidden;
+  }
+  .map-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.55;
+    filter: invert(1) grayscale(1) brightness(1.8);
+  }
+  .pin {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255, 213, 74, 0.25);
+    transform: translate(-50%, -50%);
+  }
+
+  /* Info blocks */
+  .info-block {
+    display: grid;
+    gap: 12px;
+  }
+  .info-line {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    color: var(--muted);
+  }
+  .info-line i {
+    color: #bfe6ff;
+    margin-top: 2px;
+  }
+  .info-label {
+    font-weight: 800;
+    color: #e7f0ff;
+    margin-bottom: 2px;
+  }
+  .info-line a {
+    color: #d8e7ff;
+    text-decoration: none;
+  }
+  .info-line a:hover {
+    color: #fff;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.12);
+    color: #bfe6ff;
+    font-size: 13px;
+  }
+
+  /* ====== Responsive ====== */
+  @media (max-width: 1100px) {
+    .footer-main {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .newsletter {
+      grid-template-columns: 150px 1fr;
+    }
+    .newsletter-note {
+      margin-left: 150px;
+    }
+  }
+  @media (max-width: 760px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+    }
+    .brand {
+      justify-content: center;
+    }
+    .newsletter {
+      grid-template-columns: 1fr;
+    }
+    .newsletter-label {
+      display: none;
+    }
+    .newsletter-note {
+      margin-left: 0;
+    }
+    .social {
+      justify-content: center;
+    }
+  }
+  @media (max-width: 560px) {
+    .footer-main {
+      grid-template-columns: 1fr;
+    }
+    .map-card {
+      height: 180px;
+    }
+  }
+  /* --- Softer, medium-weight footer typography --- */
+  .site-footer .brand-fallback,
+  .site-footer .newsletter-label,
+  .site-footer .btn-sub,
+  .site-footer .btn-sub span,
+  .site-footer .f-title,
+  .site-footer .info-label,
+  .site-footer .link-list a,
+  .site-footer .contact-list strong {
+    font-weight: 500; /* medium */
+  }
+
+  /* (optional) slightly soften uppercase spacing on small headings */
+  .site-footer .f-title {
+    letter-spacing: 0.08em;
+  }
+
+  /* (optional) make paragraph/body text a touch lighter for contrast */
+  .site-footer,
+  .site-footer p,
+  .site-footer li {
+    font-weight: 400; /* normal for body copy */
+  }
+</style>
+
+<script>
+  // Newsletter validation & feedback
+  (function () {
+    const form = document.getElementById("newsletterForm");
+    if (!form) return;
+    const note = form.querySelector(".newsletter-note");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!ok) {
+        note.textContent = "Please enter a valid email address.";
+        note.style.color = "#ffd9dc";
+        return;
+      }
+      note.textContent = "Thanks! You are subscribed.";
+      note.style.color = "#bfe6ff";
+      form.reset();
+    });
+  })();
+
+  // Copyright year
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid - abaris Medical Laboratory Services</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+
+  <style>
+    :root {
+      --navy: #0b2a47;
+      --blue: #0ea5e9;
+      --bg: #f7f9fc;
+      --text: #1f2937;
+      --muted: #667085;
+      --container: clamp(16px, 5vw, 64px);
+      --radius: 14px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      margin: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
+        sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      font-weight: 400;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-inline: var(--container);
+    }
+
+    /* ===== Hero with chevrons ===== */
+    .page-hero {
+      position: relative;
+      min-height: 210px;
+      display: flex;
+      align-items: center;
+      background: #0b2239;
+      color: #fff;
+      overflow: hidden;
+    }
+    .page-hero__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .page-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        900px 100% at 0% 50%,
+        rgba(5, 46, 79, 0.9) 0%,
+        rgba(5, 46, 79, 0.75) 45%,
+        rgba(5, 46, 79, 0.35) 75%,
+        rgba(5, 46, 79, 0) 100%
+      );
+      pointer-events: none;
+    }
+    .page-hero__chevrons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .page-hero__chevrons span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 42%;
+      clip-path: polygon(0 0, 58% 0, 73% 50%, 58% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(2) {
+      left: 6%;
+      clip-path: polygon(0 0, 60% 0, 75% 50%, 60% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(14, 165, 233, 0.45),
+        rgba(14, 165, 233, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(3) {
+      left: 11%;
+      clip-path: polygon(0 0, 62% 0, 77% 50%, 62% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(34, 211, 238, 0.6),
+        rgba(34, 211, 238, 0)
+      );
+    }
+    .page-hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 36px var(--container) 22px;
+    }
+    .page-hero h1 {
+      margin: 0 0 8px;
+      font-weight: 600;
+      font-size: clamp(22px, 4vw, 32px);
+    } /* medium */
+    .crumbs {
+      color: #d7ebff;
+      font-weight: 500;
+    }
+    .crumbs a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .crumbs span {
+      opacity: 0.85;
+      margin: 0 6px;
+    }
+
+    /* ===== Section header ===== */
+    .section-head {
+      text-align: center;
+      padding: 16px 0 8px;
+    }
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7aa7ff;
+      margin: 0 0 6px;
+      font-weight: 500;
+    }
+    .title {
+      margin: 0;
+      color: #1f2a37;
+      font-weight: 600; /* medium */
+      font-size: clamp(22px, 3.6vw, 28px);
+    }
+
+    /* ===== Content grid ===== */
+    .csr-grid {
+      display: grid;
+      gap: 26px;
+      align-items: start;
+      grid-template-columns: 1.1fr 0.9fr;
+      padding: 18px 0 40px;
+    }
+    .csr-copy p {
+      margin: 0 0 14px;
+      color: #4b5563;
+      line-height: 1.85;
+    }
+    .csr-gallery {
+      display: grid;
+      gap: 16px;
+      grid-template-rows: auto auto;
+    }
+    .csr-gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius);
+      box-shadow: 0 12px 28px rgba(11, 42, 71, 0.1);
+      object-fit: cover;
+    }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: all 0.45s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .csr-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  <body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+    <!-- Hero -->
+    <header class="page-hero">
+      <img class="page-hero__img" src="img/image2.png" alt="" />
+      <div class="page-hero__overlay"></div>
+      <div class="page-hero__chevrons">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="page-hero__inner">
+        <h1>Corporate Social Responsibility (CSR)</h1>
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span>»</span>
+          <span aria-current="page">Corporate Social Responsibility (CSR)</span>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Section header -->
+    <section class="container section-head">
+      <p class="eyebrow">Our</p>
+      <h2 class="title">Corporate Social Responsibility (CSR)</h2>
+    </section>
+
+    <!-- Content -->
+    <main class="container csr-grid">
+      <div class="csr-copy reveal">
+        <p>
+          We are part of the community, owe our progress to people and society
+          and depend on them for our existence. In recognition of this and in
+          conformity with our CSR policies, we are active in various segments
+          such as pollution control in our production units, care of environment
+          within our vicinity, care of people who work for us and for their
+          well-being.
+        </p>
+        <p>
+          Apart from this we have initiated various activities for upliftment of
+          society.
+        </p>
+      </div>
+
+      <aside class="csr-gallery reveal" aria-label="CSR gallery">
+        <img
+          src="/img/image3.png"
+          alt="CSR – healthcare & lab safety"
+        />
+      </aside>
+    </main>
+
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+    <script>
+      // Office locations data
+      // Load header and footer
+      fetch("partials/header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+          // Reinitialize mobile menu after loading header
+          initializeMobileMenu();
+        });
+
+      fetch("partials/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+
+      // FAQ Accordion functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize map
+        initMap();
+        initOfficeInteractions();
+
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach((question) => {
+          question.addEventListener("click", function () {
+            const faqItem = this.parentElement;
+            const faqAnswer = faqItem.querySelector(".faq-answer");
+            const isActive = this.classList.contains("active");
+
+            // Close all other FAQ items
+            faqQuestions.forEach((q) => {
+              q.classList.remove("active");
+              q.parentElement
+                .querySelector(".faq-answer")
+                .classList.remove("active");
+            });
+
+            // Toggle current item
+            if (!isActive) {
+              this.classList.add("active");
+              faqAnswer.classList.add("active");
+            }
+          });
+        });
+      });
+      // simple reveal on scroll
+      const els = [...document.querySelectorAll(".reveal")];
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      els.forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>

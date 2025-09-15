@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liquid - abaris Medical Laboratory Services</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <style>
+    :root {
+      --navy: #0b2a47;
+      --blue: #0ea5e9;
+      --bg: #f7f9fc;
+      --container: clamp(16px, 5vw, 64px);
+      --card-br: 14px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      margin: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
+        sans-serif;
+      background: var(--bg);
+      color: #1f2a37;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-inline: var(--container);
+    }
+
+    /* ===== Banner ===== */
+    .page-hero {
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      background: #0b2239;
+      color: #fff;
+      overflow: hidden;
+    }
+    .page-hero__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .page-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        900px 100% at 0% 50%,
+        rgba(5, 46, 79, 0.9) 0%,
+        rgba(5, 46, 79, 0.75) 45%,
+        rgba(5, 46, 79, 0.35) 75%,
+        rgba(5, 46, 79, 0) 100%
+      );
+      pointer-events: none;
+    }
+    .page-hero__chevrons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .page-hero__chevrons span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 42%;
+      clip-path: polygon(0 0, 58% 0, 73% 50%, 58% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(2) {
+      left: 6%;
+      clip-path: polygon(0 0, 60% 0, 75% 50%, 60% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(14, 165, 233, 0.45),
+        rgba(14, 165, 233, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(3) {
+      left: 11%;
+      clip-path: polygon(0 0, 62% 0, 77% 50%, 62% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(34, 211, 238, 0.6),
+        rgba(34, 211, 238, 0)
+      );
+    }
+    .page-hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 36px var(--container) 22px;
+    }
+    .page-hero h1 {
+      margin: 0 0 8px;
+      font-weight: 800;
+      font-size: clamp(22px, 4vw, 32px);
+    }
+    .crumbs {
+      color: #d7ebff;
+      font-weight: 600;
+    }
+    .crumbs a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .crumbs span {
+      opacity: 0.85;
+      margin: 0 6px;
+    }
+
+    /* Intro */
+    .intro {
+      padding-block: 18px 30px;
+    }
+    .intro p {
+      color: #5b6678;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ===== Table card ===== */
+    .ol-card {
+      background: #fff;
+      border-radius: var(--card-br);
+      box-shadow: 0 14px 36px rgba(11, 42, 71, 0.08),
+        0 3px 10px rgba(11, 42, 71, 0.04);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .ol-head {
+      background: #e7eaee;
+      color: #344054;
+      text-align: center;
+      padding: 12px 10px;
+      font-weight: 800;
+    }
+    .ol-sub {
+      background: #f3f5f8;
+      color: #667085;
+      text-align: center;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+    .ol-tag {
+      background: #ffffff;
+      border-top: 1px solid #eef2f7;
+      text-align: center;
+      padding: 8px 10px;
+      color: #0b5cad;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      background: #0d62a8;
+      color: #fff;
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #eef2f7;
+      font-size: 15px;
+    }
+    tbody tr:hover {
+      background: #f9fbfd;
+    }
+    .col-name {
+      font-weight: 600;
+      color: #1f2a37;
+    }
+    .col-pack {
+      color: #0d62a8;
+      font-weight: 500;
+    }
+
+    /* Mobile stacked rows */
+    @media (max-width: 640px) {
+      thead {
+        display: none;
+      }
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+      tbody tr {
+        border-bottom: 1px solid #eef2f7;
+      }
+      tbody td {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 16px;
+      }
+      tbody td::before {
+        content: attr(data-label);
+        font-size: 12px;
+        color: #667085;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .col-name {
+        font-weight: 500;
+      }
+    }
+  </style>
+  <body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+ <header class="page-hero">
+    <img class="page-hero__img" src="https://images.pexels.com/photos/4210612/pexels-photo-4210612.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+    <div class="page-hero__overlay"></div>
+    <div class="page-hero__chevrons"><span></span><span></span><span></span></div>
+    <div class="page-hero__inner">
+      <h1>Oral Liquids</h1>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>»</span> <span aria-current="page">Oral Liquids</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Intro paragraph -->
+  <section class="intro container">
+    <p>
+      Our Tablets &amp; Oral Liquid division stands out for its wide range of formulations for use in virtually any
+      situation requiring the finest formulations as well as combinations to assure the best systemic response to
+      therapeutic treatments. Each drug is made using the best raw materials, tested and checked at every stage. The range
+      includes OTC as well as prescription remedies.
+    </p>
+  </section>
+
+  <!-- Table -->
+  <section class="container">
+    <div class="ol-card">
+      <div class="ol-head">Abaris Healthcare Pvt. Ltd.</div>
+      <div class="ol-sub">Manufacturers of I.V.Fluids (Infusions) &amp; Injections (Liquid)</div>
+      <div class="ol-tag">WHO GMP Certified Company</div>
+
+      <div class="table-wrap">
+        <table id="oralTable" aria-describedby="caption">
+          <caption id="caption" style="position:absolute;left:-9999px">Oral liquids: generic/product and unit pack</caption>
+          <thead>
+            <tr>
+              <th>Generic / Product Name</th>
+              <th>Unit Pack</th>
+            </tr>
+          </thead>
+          <tbody id="oralRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+    <script>
+      // Office locations data
+      // Load header and footer
+      fetch("partials/header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+          // Reinitialize mobile menu after loading header
+          initializeMobileMenu();
+        });
+
+      fetch("partials/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+
+      // FAQ Accordion functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize map
+        initMap();
+        initOfficeInteractions();
+
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach((question) => {
+          question.addEventListener("click", function () {
+            const faqItem = this.parentElement;
+            const faqAnswer = faqItem.querySelector(".faq-answer");
+            const isActive = this.classList.contains("active");
+
+            // Close all other FAQ items
+            faqQuestions.forEach((q) => {
+              q.classList.remove("active");
+              q.parentElement
+                .querySelector(".faq-answer")
+                .classList.remove("active");
+            });
+
+            // Toggle current item
+            if (!isActive) {
+              this.classList.add("active");
+              faqAnswer.classList.add("active");
+            }
+          });
+        });
+      });
+      /* Oral liquids list (sample; edit as needed) */
+    const oralLiquids = [
+      { name:'Paracetamol Suspension 125 mg/5 ml', pack:'60 ml Bottle' },
+      { name:'Paracetamol Suspension 250 mg/5 ml', pack:'60 ml Bottle' },
+      { name:'Ibuprofen Oral Suspension 100 mg/5 ml', pack:'100 ml Bottle' },
+      { name:'Dicyclomine & Simethicone Drops', pack:'10 ml Dropper' },
+      { name:'Dextromethorphan + CPM + Phenylephrine Syrup', pack:'100 ml Bottle' },
+      { name:'Ambroxol + Guaiphenesin + Terbutaline Syrup', pack:'100 ml Bottle' },
+      { name:'Multivitamin Syrup with Lysine', pack:'200 ml Bottle' },
+      { name:'Folic Acid + Iron (Ferrous) Syrup', pack:'150 ml Bottle' },
+      { name:'Cyproheptadine & Tricholine Citrate Syrup', pack:'200 ml Bottle' },
+      { name:'Silymarin & B-Complex Liver Tonic', pack:'200 ml Bottle' },
+      { name:'Domperidone Suspension 1 mg/ml', pack:'30 ml Bottle' },
+      { name:'Zinc Gluconate Oral Solution', pack:'60 ml Bottle' },
+      { name:'Sodium Picosulfate Oral Solution', pack:'5 ml Ampoule' },
+      { name:'Magaldrate & Simethicone Antacid Suspension', pack:'170 ml Bottle' },
+      { name:'Cefixime Dry Syrup 50 mg/5 ml (reconstitution)', pack:'30 ml Bottle' },
+      { name:'Azithromycin Suspension 200 mg/5 ml (reconstitution)', pack:'15 ml Bottle' },
+      { name:'Levocetirizine Hydrochloride Syrup', pack:'60 ml Bottle' },
+      { name:'Cetirizine Hydrochloride Syrup', pack:'60 ml Bottle' },
+      { name:'ORS – Oral Rehydration Solution', pack:'200 ml Bottle' },
+      { name:'Calcium & Vitamin D3 Suspension', pack:'200 ml Bottle' },
+      { name:'Vitamin B-Complex Syrup', pack:'200 ml Bottle' },
+      { name:'Lactulose Solution 10 g/15 ml', pack:'200 ml Bottle' },
+      { name:'Sodium Citrate & Citric Acid Syrup (Alkaliser)', pack:'200 ml Bottle' }
+    ];
+
+    const rows = document.getElementById('oralRows');
+    rows.innerHTML = oralLiquids.map(it => `
+      <tr>
+        <td class="col-name" data-label="Generic / Product Name">${it.name}</td>
+        <td class="col-pack" data-label="Unit Pack">${it.pack}</td>
+      </tr>
+    `).join('');
+    </script>
+  </body>
+</html>
