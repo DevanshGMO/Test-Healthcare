@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Blog - abaris Medical Laboratory Services</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Blog Page Specific Styles */
+    .blog-hero {
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.8), rgba(8, 145, 178, 0.8)),
+        url('https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop') center/cover;
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(30, 64, 175, 0.7);
+      z-index: 1;
+    }
+
+    .blog-hero .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .blog-hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 20px;
+    }
+
+    .breadcrumb a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .breadcrumb a:hover {
+      opacity: 0.8;
+    }
+
+    .breadcrumb i {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+
+    .home-icon {
+      width: 40px;
+      height: 40px;
+      background: #1e40af;
+      border: 2px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      margin: 20px auto 0;
+    }
+
+    /* Blog Grid Section */
+    .blog-grid-section {
+      padding: 80px 0;
+      background: #f8fafc;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .blog-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-image {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .blog-card:hover .blog-image img {
+      transform: scale(1.05);
+    }
+
+    .blog-tags {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .blog-tag {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-covid {
+      background: #1e40af;
+    }
+
+    .tag-testing {
+      background: #10b981;
+    }
+
+    .tag-research {
+      background: #0891b2;
+    }
+
+    .tag-adults {
+      background: #7c3aed;
+    }
+
+    .tag-symptoms {
+      background: #dc2626;
+    }
+
+    .tag-audiology {
+      background: #059669;
+    }
+
+    .blog-content {
+      padding: 30px;
+    }
+
+    .blog-title {
+      color: #1e40af;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      line-height: 1.3;
+      transition: color 0.3s ease;
+    }
+
+    .blog-card:hover .blog-title {
+      color: #0891b2;
+    }
+
+    .blog-excerpt {
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .blog-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .blog-date {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .blog-author {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+
+    .read-more-btn {
+      background: #1e40af;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .read-more-btn:hover {
+      background: #1e3a8a;
+      transform: translateX(2px);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pagination-btn {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      color: #6b7280;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .pagination-btn:hover {
+      border-color: #1e40af;
+      color: #1e40af;
+      transform: translateY(-2px);
+    }
+
+    .pagination-btn.active {
+      background: #1e40af;
+      border-color: #1e40af;
+      color: white;
+    }
+
+    .pagination-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn.disabled:hover {
+      transform: none;
+      border-color: #e5e7eb;
+      color: #6b7280;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .blog-hero {
+        padding: 100px 0 60px;
+      }
+
+      .blog-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .blog-grid-section {
+        padding: 60px 0;
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .blog-card {
+        margin: 0 10px;
+      }
+
+      .blog-content {
+        padding: 25px;
+      }
+
+      .blog-title {
+        font-size: 1.2rem;
+      }
+
+      .blog-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .pagination {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pagination-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-hero h1 {
+        font-size: 2rem;
+      }
+
+      .breadcrumb {
+        font-size: 0.9rem;
+      }
+
+      .blog-card {
+        margin: 0 5px;
+      }
+
+      .blog-content {
+        padding: 20px;
+      }
+
+      .blog-image {
+        height: 200px;
+      }
+
+      .blog-tags {
+        top: 15px;
+        left: 15px;
+      }
+
+      .blog-tag {
+        padding: 4px 8px;
+        font-size: 10px;
+      }
+    }
+
+    /* Loading Animation */
+    .blog-card.loading {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Blog Card Hover Effects */
+    .blog-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.05), rgba(16, 185, 129, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    .blog-card:hover::before {
+      opacity: 1;
+    }
+
+    .blog-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Enhanced Blog Card Design */
+    .blog-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      border: 1px solid rgba(229, 231, 235, 0.8);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-image {
+      position: relative;
+      height: 280px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    }
+
+    .blog-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .blog-card:hover .blog-image img {
+      transform: scale(1.08);
+    }
+
+    .blog-tags {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      display: flex;
+      gap: 12px;
+      z-index: 3;
+    }
+
+    .blog-tag {
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+    }
+
+    .tag-covid {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    }
+
+    .tag-testing {
+      background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    }
+
+    .tag-research {
+      background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%);
+    }
+
+    .tag-adults {
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    }
+
+    .tag-symptoms {
+      background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+    }
+
+    .tag-audiology {
+      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    }
+
+    .blog-content {
+      padding: 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .blog-title {
+      color: #1e40af;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.4;
+      transition: color 0.3s ease;
+      display: -webkit-box;
+      /* -webkit-line-clamp: 2; */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .blog-card:hover .blog-title {
+      color: #0891b2;
+    }
+
+    .blog-excerpt {
+      color: #6b7280;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-size: 15px;
+      display: -webkit-box;
+      /* -webkit-line-clamp: 3; */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .blog-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid #f3f4f6;
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+
+    .blog-date {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .blog-date i {
+      color: #10b981;
+      font-size: 12px;
+    }
+
+    .blog-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .blog-author i {
+      color: #1e40af;
+      font-size: 12px;
+    }
+
+    .read-more-btn {
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 14px;
+      text-decoration: none;
+      width: 100%;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+    }
+
+    .read-more-btn:hover {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.4);
+    }
+
+    .read-more-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .read-more-btn:hover i {
+      transform: translateX(4px);
+    }
+
+    /* Enhanced Responsive Design */
+    @media (max-width: 1200px) {
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .blog-hero {
+        padding: 80px 0 50px;
+      }
+
+      .blog-hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .blog-grid-section {
+        padding: 60px 0;
+      }
+
+      .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .blog-card {
+        margin: 0 8px;
+      }
+
+      .blog-content {
+        padding: 24px;
+      }
+
+      .blog-title {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+      }
+
+      .blog-excerpt {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      .blog-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding-top: 16px;
+        margin-bottom: 16px;
+      }
+
+      .blog-image {
+        height: 220px;
+      }
+
+      .blog-tags {
+        top: 16px;
+        left: 16px;
+        gap: 8px;
+      }
+
+      .blog-tag {
+        padding: 6px 12px;
+        font-size: 10px;
+      }
+
+      .read-more-btn {
+        padding: 12px 24px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-hero h1 {
+        font-size: 2rem;
+      }
+
+      .breadcrumb {
+        font-size: 0.9rem;
+      }
+
+      .blog-card {
+        margin: 0 4px;
+        border-radius: 12px;
+      }
+
+      .blog-content {
+        padding: 20px;
+      }
+
+      .blog-image {
+        height: 200px;
+      }
+
+      .blog-title {
+        font-size: 1.2rem;
+        line-height: 1.3;
+      }
+
+      .blog-excerpt {
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .blog-tags {
+        top: 12px;
+        left: 12px;
+      }
+
+      .blog-tag {
+        padding: 4px 10px;
+        font-size: 9px;
+      }
+
+      .read-more-btn {
+        padding: 10px 20px;
+        font-size: 12px;
+        border-radius: 8px;
+      }
+    }
+
+    /* Loading Animation Enhancement */
+    .blog-card.loading {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Card Gradient Overlay */
+    .blog-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.02), rgba(16, 185, 129, 0.02));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      border-radius: 16px;
+    }
+
+    .blog-card:hover::after {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Include Header -->
+  <div id="header-placeholder"></div>
+
+  <!-- Blog Hero Section -->
+  <section class="blog-hero">
+    <div class="container">
+      <h1>Our Blog</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Blog Grid</span>
+      </div>
+      <div class="home-icon">
+        <i class="fas fa-home"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Grid Section -->
+  <section class="blog-grid-section">
+    <div class="container">
+      <div class="blog-grid">
+        <!-- Blog Card 1 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="COVID-19 Testing">
+            <div class="blog-tags">
+              <span class="blog-tag tag-covid">COVID-19</span>
+              <span class="blog-tag tag-testing">Testing</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">Partnership to Increase COVID19 Testing Capacity and Track All COVID-19 Variants</h3>
+            <p class="blog-excerpt">With 200 access points across the country's most populous province, we are in a
+              unique position to be an important partner in the response to COVID-19 having government...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 25, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 2 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3825527/pexels-photo-3825527.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="Pathogen Prevention">
+            <div class="blog-tags">
+              <span class="blog-tag tag-covid">COVID-19</span>
+              <span class="blog-tag tag-research">Pandemic</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">Preventing Pathogen Passage by Taking Precautions Against the Century Pandemic</h3>
+            <p class="blog-excerpt">The governments with the most successful responses to the pandemic were led by the
+              WHO. Additionally, they worked with their citizens to make sure that no one got infected...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 20, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 3 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3938023/pexels-photo-3938023.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="Genetic Mutations">
+            <div class="blog-tags">
+              <span class="blog-tag tag-research">DNA</span>
+              <span class="blog-tag tag-testing">Mutations</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">Driving that Genic Mutations Seen Spreading that through a New Viral Population</h3>
+            <p class="blog-excerpt">Naturally occurring defenses that the bacteria, viruses and different ways to add to
+              the discovery rate of mutations...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 18, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 4 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="COVID-19 Symptoms">
+            <div class="blog-tags">
+              <span class="blog-tag tag-adults">Adults</span>
+              <span class="blog-tag tag-symptoms">Symptoms</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">No Cough, No Problem? Medication Dispensing and COVID-19 Symptoms in Adults</h3>
+            <p class="blog-excerpt">COVID-19 among adults to look out for a dry cough and shortness of breath, but many
+              adults often present other...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 25, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 5 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3825527/pexels-photo-3825527.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="Cellular Housekeeping">
+            <div class="blog-tags">
+              <span class="blog-tag tag-audiology">Audiology</span>
+              <span class="blog-tag tag-research">Research</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">Cellular Housekeeping: How technology models in mice could lead to new treatments
+            </h3>
+            <p class="blog-excerpt">Treatments and are eventually channeled through specialized enzymes. Research has
+              not only been preventive to change...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 20, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 6 -->
+        <article class="blog-card">
+          <div class="blog-image">
+            <img
+              src="https://images.pexels.com/photos/3786126/pexels-photo-3786126.jpeg?auto=compress&cs=tinysrgb&w=400&h=250&fit=crop"
+              alt="Research and Testing">
+            <div class="blog-tags">
+              <span class="blog-tag tag-covid">COVID-19</span>
+              <span class="blog-tag tag-testing">Testing</span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <h3 class="blog-title">Keep Calm and Research On How to separate hype from fact in biomedical research</h3>
+            <p class="blog-excerpt">Hundreds of thousands of people with COVID-19 outbreaks if those experiencing
+              similar are not connected to make behavioral which often...</p>
+            <div class="blog-meta">
+              <div class="blog-date">
+                <i class="fas fa-calendar"></i>
+                <span>April 15, 2022</span>
+              </div>
+              <div class="blog-author">
+                <i class="fas fa-user"></i>
+                <span>Mike Godley</span>
+              </div>
+            </div>
+            <a href="#" class="read-more-btn">
+              <span>Read More</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <a href="#" class="pagination-btn disabled">
+          <i class="fas fa-chevron-left"></i>
+        </a>
+        <a href="#" class="pagination-btn active">1</a>
+        <a href="#" class="pagination-btn">2</a>
+        <a href="#" class="pagination-btn">3</a>
+        <a href="#" class="pagination-btn">
+          <i class="fas fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Include Footer -->
+  <div id="footer-placeholder"></div>
+
+  <script src="script.js"></script>
+  <script>
+    // Load header and footer
+    fetch('partials/header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+        initializeMobileMenu();
+      });
+
+    fetch('partials/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+
+    // Initialize mobile menu functionality
+    function initializeMobileMenu() {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileNav = document.getElementById('mobileNav');
+
+      if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener('click', function () {
+          this.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+        });
+
+        // Mobile dropdown functionality
+        document.querySelectorAll('.mobile-dropdown .mobile-link').forEach(link => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdown = this.parentElement;
+            dropdown.classList.toggle('active');
+          });
+        });
+      }
+    }
+
+    // Blog page specific functionality
+    document.addEventListener('DOMContentLoaded', function () {
+      // Animate blog cards on scroll
+      const blogCards = document.querySelectorAll('.blog-card');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('loading');
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      blogCards.forEach(card => {
+        observer.observe(card);
+      });
+
+      // Read more button functionality
+      document.querySelectorAll('.read-more-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          const title = this.closest('.blog-card').querySelector('.blog-title').textContent;
+          showNotification(`Opening article: "${title.substring(0, 50)}..."`, 'info');
+        });
+      });
+
+      // Pagination functionality
+      document.querySelectorAll('.pagination-btn:not(.disabled)').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          // Remove active class from all buttons
+          document.querySelectorAll('.pagination-btn').forEach(b => b.classList.remove('active'));
+
+          // Add active class to clicked button (if it's a number)
+          if (!this.querySelector('i')) {
+            this.classList.add('active');
+            const page = this.textContent;
+            showNotification(`Loading page ${page}...`, 'info');
+          }
+        });
+      });
+    });
+
+    // Enhanced notification system
+    function showNotification(message, type = 'info') {
+      const existing = document.querySelector('.notification');
+      if (existing) {
+        existing.remove();
+      }
+
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+      Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        padding: '16px 24px',
+        borderRadius: '8px',
+        color: 'white',
+        fontWeight: '500',
+        zIndex: '9999',
+        transform: 'translateX(100%)',
+        transition: 'transform 0.3s ease',
+        backgroundColor: type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#0891b2',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+        maxWidth: '400px'
+      });
+
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+      }, 10);
+
+      setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+          notification.remove();
+        }, 300);
+      }, 3000);
+    }
+  </script>
+</body>
+
+</html>

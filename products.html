@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - abaris Medical Laboratory Services</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <style>
+    :root {
+      --navy: #0b2a47;
+      --navy-2: #10355e;
+      --blue: #0ea5e9;
+      --bg: #f7f9fc;
+      --container: clamp(16px, 5vw, 64px);
+      --card-br: 14px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    html,
+    body {
+      margin: 0;
+    }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial,
+        sans-serif;
+      background: var(--bg);
+      color: #1f2a37;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-inline: var(--container);
+    }
+    /* ===== Banner (like your other pages) ===== */
+    .page-hero {
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      background: #0b2239;
+      color: #fff;
+      overflow: hidden;
+    }
+    .page-hero__img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .page-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        900px 100% at 0% 50%,
+        rgba(5, 46, 79, 0.9) 0%,
+        rgba(5, 46, 79, 0.75) 45%,
+        rgba(5, 46, 79, 0.35) 75%,
+        rgba(5, 46, 79, 0) 100%
+      );
+      pointer-events: none;
+    }
+    .page-hero__chevrons {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .page-hero__chevrons span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 42%;
+      clip-path: polygon(0 0, 58% 0, 73% 50%, 58% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(2) {
+      left: 6%;
+      clip-path: polygon(0 0, 60% 0, 75% 50%, 60% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(14, 165, 233, 0.45),
+        rgba(14, 165, 233, 0)
+      );
+    }
+    .page-hero__chevrons span:nth-child(3) {
+      left: 11%;
+      clip-path: polygon(0 0, 62% 0, 77% 50%, 62% 100%, 0 100%);
+      background: linear-gradient(
+        90deg,
+        rgba(34, 211, 238, 0.6),
+        rgba(34, 211, 238, 0)
+      );
+    }
+    .page-hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 36px var(--container) 22px;
+    }
+    .page-hero h1 {
+      margin: 0 0 8px;
+      font-weight: 800;
+      font-size: clamp(22px, 4vw, 32px);
+    }
+    .crumbs {
+      color: #d7ebff;
+      font-weight: 600;
+    }
+    .crumbs a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .crumbs span {
+      opacity: 0.85;
+      margin: 0 6px;
+    }
+
+    /* Intro */
+    .intro {
+      padding-block: 18px 30px;
+    }
+    .intro p {
+      color: #5b6678;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ===== Table card ===== */
+    .iv-card {
+      background: #fff;
+      border-radius: var(--card-br);
+      box-shadow: 0 14px 36px rgba(11, 42, 71, 0.08),
+        0 3px 10px rgba(11, 42, 71, 0.04);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .iv-card .headline {
+      padding: 10px 0;
+      text-align: center;
+      background: #f2f4f7;
+    }
+    .iv-card .headline h3 {
+      margin: 0;
+      color: #344054;
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .iv-card .sub {
+      padding: 8px 0;
+      text-align: center;
+      background: #f8fafc;
+      color: #667085;
+      font-size: 13px;
+    }
+    .iv-card .tag {
+      padding: 8px 0;
+      text-align: center;
+      background: #ffffff;
+      color: #0b5cad;
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-top: 1px solid #eef2f7;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    thead th {
+      background: #0d62a8;
+      color: #fff;
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    tbody td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #eef2f7;
+      font-size: 15px;
+    }
+    tbody tr:hover {
+      background: #f9fbfd;
+    }
+    .col-name {
+      font-weight: 600;
+      color: #1f2a37;
+    }
+    .col-vol {
+      color: #0d62a8;
+      font-weight: 800;
+    }
+
+    /* Mobile stacked rows */
+    @media (max-width: 640px) {
+      thead {
+        display: none;
+      }
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+      tbody tr {
+        border-bottom: 1px solid #eef2f7;
+      }
+      tbody td {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 12px 16px;
+      }
+      tbody td::before {
+        content: attr(data-label);
+        font-size: 12px;
+        color: #667085;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .col-name {
+        font-weight: 700;
+      }
+    }
+  </style>
+  <body>
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+
+    <header class="page-hero">
+      <img
+        class="page-hero__img"
+        src="https://images.pexels.com/photos/3825466/pexels-photo-3825466.jpeg?auto=compress&cs=tinysrgb&w=1600"
+        alt=""
+      />
+      <div class="page-hero__overlay"></div>
+      <div class="page-hero__chevrons">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="page-hero__inner">
+        <h1>I.V Fluid</h1>
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span>»</span>
+          <span aria-current="page">I.V Fluid</span>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Intro paragraph -->
+    <section class="intro container">
+      <p>
+        A complete range of fluid replenishers, electrolytes, diuretics and
+        antibacterial, manufactured on automatic equipments, untouched by hands,
+        absolutely sterile and safe. Our range also includes oxazolidinones,
+        antifungal, antiprotozoal, anti amoebic and analgesic injectables for
+        therapeutic and prophylactic use.
+      </p>
+    </section>
+
+    <!-- Table -->
+    <section class="container">
+      <div class="iv-card">
+        <div class="headline"><h3>Abaris Healthcare Pvt. Ltd.</h3></div>
+        <div class="sub">
+          Manufacturers of I.V.Fluids (Infusions) &amp; Injections (Liquid)
+        </div>
+        <div class="tag">WHO GMP Certified Company</div>
+
+        <div class="table-wrap">
+          <table id="ivTable" aria-describedby="table-caption">
+            <caption
+              id="table-caption"
+              style="position: absolute; left: -9999px"
+            >
+              I.V. Fluid products and fill volumes
+            </caption>
+            <thead>
+              <tr>
+                <th>Product (Nipple Head &amp; Euro Head)</th>
+                <th>Fill Volume</th>
+              </tr>
+            </thead>
+            <tbody id="ivRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Include Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="script.js"></script>
+    <script>
+      // Office locations data
+      // Load header and footer
+      fetch("partials/header.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+          // Reinitialize mobile menu after loading header
+          initializeMobileMenu();
+        });
+
+      fetch("partials/footer.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+
+      // FAQ Accordion functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize map
+        initMap();
+        initOfficeInteractions();
+
+        const faqQuestions = document.querySelectorAll(".faq-question");
+
+        faqQuestions.forEach((question) => {
+          question.addEventListener("click", function () {
+            const faqItem = this.parentElement;
+            const faqAnswer = faqItem.querySelector(".faq-answer");
+            const isActive = this.classList.contains("active");
+
+            // Close all other FAQ items
+            faqQuestions.forEach((q) => {
+              q.classList.remove("active");
+              q.parentElement
+                .querySelector(".faq-answer")
+                .classList.remove("active");
+            });
+
+            // Toggle current item
+            if (!isActive) {
+              this.classList.add("active");
+              faqAnswer.classList.add("active");
+            }
+          });
+        });
+      });
+      /* Data (taken from your previous list) */
+      const products = [
+        { name: "Ciprofloxacin Infusion", volume: "100 ml" },
+        { name: "Levofloxacin Infusion", volume: "100 ml" },
+        { name: "Mannitol 20% Infusion", volume: "100 ml" },
+        { name: "NS - Sodium chloride 0.9% Infusion", volume: "100 ml" },
+        { name: "Paracetamol Infusion", volume: "100 ml" },
+        { name: "Ornidazole Infusion", volume: "100 ml" },
+        { name: "Ofloxacin Infusion", volume: "100 ml" },
+        { name: "Ofloxacin + Ornidazole Infusion", volume: "100 ml" },
+        { name: "Moxifloxacin Infusion", volume: "100 ml" },
+        { name: "Metronidazlole Infusion", volume: "100 ml" },
+        { name: "Fluconazole Infusion", volume: "100 ml" },
+
+        { name: "Moxifloxacin Infusion", volume: "250 ml" },
+        { name: "RL - Ringer Lactate Infusion", volume: "250 ml" },
+        {
+          name: "DNS - Sodium Chloride 0.9% & Dextrose 5% Infusion",
+          volume: "250 ml",
+        },
+        { name: "D 5 - Dextrose 5% Infusion", volume: "250 ml" },
+        { name: "NS - Sodium chloride 0.9% Infusion", volume: "250 ml" },
+
+        { name: "Lenozolid Infusion", volume: "300 ml" },
+
+        { name: "RL - Ringer Lactate Infusion", volume: "500 ml" },
+        {
+          name: "DNS - Sodium Chloride 0.9% & Dextrose 5% Infusion",
+          volume: "500 ml",
+        },
+        { name: "D 5 - Dextrose 5% Infusion", volume: "500 ml" },
+        { name: "NS - Sodium chloride 0.9% Infusion", volume: "500 ml" },
+
+        { name: "NS - Sodium chloride 0.9% Infusion", volume: "1000 ml" },
+        { name: "D 5 - Dextrose 5% Infusion", volume: "1000 ml" },
+        {
+          name: "DNS - Sodium Chloride 0.9% & Dextrose 5% Infusion",
+          volume: "1000 ml",
+        },
+        { name: "RL - Ringer Lactate Infusion", volume: "1000 ml" },
+      ];
+
+      // sort to match screenshot: by volume asc, then name
+      const volNum = (v) => parseInt((v || "0").replace(/\D/g, ""), 10) || 0;
+      products.sort(
+        (a, b) =>
+          volNum(a.volume) - volNum(b.volume) || a.name.localeCompare(b.name)
+      );
+
+      const rowsEl = document.getElementById("ivRows");
+      rowsEl.innerHTML = products
+        .map(
+          (p) => `
+      <tr>
+        <td class="col-name" data-label="Product">${p.name}</td>
+        <td class="col-vol"  data-label="Fill Volume">${p.volume}</td>
+      </tr>
+    `
+        )
+        .join("");
+    </script>
+  </body>
+</html>

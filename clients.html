@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Clients</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ 
+</head>
+
+  <style>
+    :root{
+      --navy:#0b2a47;
+      --blue:#0ea5e9;
+      --bg:#f7f9fc;
+      --text:#1f2a37;
+      --muted:#667085;
+      --container: clamp(16px, 5vw, 64px);
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding-inline:var(--container)}
+
+    /* ===== Banner with chevrons ===== */
+    .page-hero{
+      position:relative; min-height:210px; display:flex; align-items:center;
+      background:#0b2239; color:#fff; overflow:hidden;
+    }
+    .page-hero__img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.25}
+    .page-hero__overlay{
+      position:absolute; inset:0;
+      background: radial-gradient(900px 100% at 0% 50%,
+                 rgba(5,46,79,.9) 0%, rgba(5,46,79,.75) 45%,
+                 rgba(5,46,79,.35) 75%, rgba(5,46,79,0) 100%);
+      pointer-events:none;
+    }
+    .page-hero__chevrons{position:absolute; inset:0; pointer-events:none}
+    .page-hero__chevrons span{
+      position:absolute; left:0; top:0; bottom:0; width:42%;
+      clip-path:polygon(0 0,58% 0,73% 50%,58% 100%,0 100%);
+      background:linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,0));
+    }
+    .page-hero__chevrons span:nth-child(2){
+      left:6%; clip-path:polygon(0 0,60% 0,75% 50%,60% 100%,0 100%);
+      background:linear-gradient(90deg, rgba(14,165,233,.45), rgba(14,165,233,0));
+    }
+    .page-hero__chevrons span:nth-child(3){
+      left:11%; clip-path:polygon(0 0,62% 0,77% 50%,62% 100%,0 100%);
+      background:linear-gradient(90deg, rgba(34,211,238,.6), rgba(34,211,238,0));
+    }
+    .page-hero__inner{position:relative; z-index:2; width:100%; padding:36px var(--container) 22px}
+    .page-hero h1{margin:0 0 8px; font-weight:800; font-size:clamp(22px,4vw,32px)}
+    .crumbs{color:#d7ebff; font-weight:600}
+    .crumbs a{color:#fff; text-decoration:none}
+    .crumbs span{opacity:.85; margin:0 6px}
+
+    /* ===== Intro text ===== */
+    .intro{padding-block:18px 30px}
+    .intro p{margin:0; color:#475467; line-height:1.75}
+
+    /* ===== Section header ===== */
+    .clients-header{text-align:center; margin:18px 0 12px}
+    .eyebrow{
+      font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#7aa7ff;
+      font-weight:800; margin:0 0 8px;
+    }
+    .title{
+      margin:0; font-weight:900; font-size:clamp(22px,3.5vw,28px); color:#1f2a37;
+    }
+    .underline{
+      width:64px; height:4px; background:linear-gradient(90deg,#0ea5e9,#38bdf8);
+      border-radius:2px; margin:8px auto 0;
+    }
+
+    /* ===== Grid of client logos ===== */
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      padding:18px 0 40px;
+    }
+    .client-card{
+      background:#fff; border-radius:12px; padding:18px;
+      box-shadow:0 10px 24px rgba(11,42,71,.06), 0 2px 8px rgba(11,42,71,.04);
+      border:1px solid #eef2f7; transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .client-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 18px 36px rgba(11,42,71,.10), 0 6px 12px rgba(11,42,71,.06);
+    }
+    .logo-box{
+      position:relative; display:flex; align-items:center; justify-content:center;
+      aspect-ratio: 1.8 / 1; /* wide cards like the screenshot */
+      background:#fff; border-radius:8px;
+    }
+    .logo-box img{
+      max-width:100%; max-height:100%; object-fit:contain; display:block;
+      filter:saturate(.95) contrast(1.05);
+    }
+    .client-fallback{
+      position:absolute; inset:0; display:none; align-items:center; justify-content:center;
+      border-radius:8px; padding:8px; text-align:center; font-weight:800; color:#0b2a47;
+      background:linear-gradient(135deg,#eef4ff,#f7fbff);
+    }
+    .logo-box.fallback .client-fallback{display:flex}
+
+    /* Reveal animation */
+    .reveal{opacity:0; transform:translateY(16px); transition:all .4s ease}
+    .reveal.is-visible{opacity:1; transform:none}
+
+    @media (max-width:700px){
+      .grid{grid-template-columns: repeat(2, 1fr)}
+    }
+    @media (max-width:420px){
+      .grid{grid-template-columns: 1fr}
+    }
+  </style>
+
+<body>
+   <!-- Include Header -->
+  <div id="header-placeholder"></div>
+  
+<!-- Banner -->
+  <header class="page-hero">
+    <img class="page-hero__img" src="https://images.pexels.com/photos/3735760/pexels-photo-3735760.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="">
+    <div class="page-hero__overlay"></div>
+    <div class="page-hero__chevrons"><span></span><span></span><span></span></div>
+    <div class="page-hero__inner">
+      <h1>Our Clients</h1>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>»</span> <span aria-current="page">Our Clients</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <section class="intro container">
+    <p>
+      Quality of products and quality of services attract top names. We are fortunate to have had the opportunity to gain
+      impressive clients. We remain committed and dedicated to doing our best for our clients whom we count as part of our large
+      and growing family.
+    </p>
+  </section>
+
+  <!-- Clients list -->
+  <section class="container">
+    <header class="clients-header">
+      <p class="eyebrow">We work with the</p>
+      <h2 class="title">Best Clients</h2>
+      <div class="underline"></div>
+    </header>
+
+    <div id="clientsGrid" class="grid"></div>
+  </section>
+
+  <div id="footer-placeholder"></div>
+  <script>
+
+
+    // Load header and footer
+    fetch('partials/header.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('header-placeholder').innerHTML = data;
+        initializeMobileMenu();
+      });
+
+    fetch('partials/footer.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('footer-placeholder').innerHTML = data;
+      });
+
+    // Initialize mobile menu functionality
+    function initializeMobileMenu() {
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileNav = document.getElementById('mobileNav');
+
+      if (mobileToggle && mobileNav) {
+        mobileToggle.addEventListener('click', function () {
+          this.classList.toggle('active');
+          mobileNav.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.mobile-dropdown .mobile-link').forEach(link => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdown = this.parentElement;
+            dropdown.classList.toggle('active');
+          });
+        });
+      }
+    }
+    // DOM Content Loaded Event
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeAnimations();
+      initializeCounters();
+      initializeClientCards();
+    });
+ /* Client logos (put your images into /assets/clients/ with these filenames) */
+    const clients = [
+      {name:'Unique',         src:'img/Logo1.png'},
+      {name:'F3 Biotech',     src:'img/Logo2.png'},
+      {name:'Fresenius Kabi', src:'img/Logo3.png'},
+      {name:'Lupin',          src:'img/Logo4.png'},
+      {name:'Themis',         src:'img/Logo5.png'},
+      {name:'Zydus',          src:'img/Logo6.png'},
+      {name:'Amruta Pharma',  src:'img/Logo7.png'},
+      {name:'Baxter',         src:'img/8.png'},
+      {name:'Wockhardt',      src:'img/9.png'},
+      {name:'Ranbaxy',        src:'img/10.png'},
+      {name:'Plethico',       src:'img/11.png'},
+      {name:'Neclife',        src:'img/12.png'},
+      {name:'Claris',         src:'img/13.png'},
+      {name:'Cadila',         src:'img/14.png'},
+      {name:'Alkem',          src:'img/15.png'},
+      {name:'Abbott',         src:'img/16.png'},
+      {name:'Intas',          src:'img/17.png'},
+      {name:'Mankind',        src:'img/18.png'},
+      {name:'Hetero',         src:'img/19.png'},
+      {name:'Biocon',         src:'img/20.png'},
+      {name:'Macleods',       src:'img/21.png'}
+    ];
+
+    /* Render grid */
+    const grid = document.getElementById('clientsGrid');
+    grid.innerHTML = clients.map(c => `
+      <div class="client-card reveal">
+        <div class="logo-box" data-name="${c.name}">
+          <img loading="lazy" src="${c.src}" alt="${c.name} logo"
+               onerror="this.closest('.logo-box').classList.add('fallback'); this.closest('.logo-box').querySelector('.client-fallback').style.display='flex'; this.remove();">
+          <span class="client-fallback">${c.name}</span>
+        </div>
+      </div>
+    `).join('');
+
+    /* Simple reveal-on-scroll */
+    const toReveal = [...document.querySelectorAll('.reveal')];
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:.15});
+    toReveal.forEach(el => io.observe(el));
+   
+  </script>
+</body>
+
+</html>
